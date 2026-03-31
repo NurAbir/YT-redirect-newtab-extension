@@ -127,3 +127,4 @@ chrome.tabs.create({ url: "yout-ube.com/watch?v=..." })
 ## License
 
 MIT — free to use, modify, and distribute.
+.
