@@ -1,0 +1,1 @@
+# YT-redirect-newtab-extension
