@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YT New Tab</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 260px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #f1f1f1;
+      padding: 20px;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: #ff0000;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      font-size: 10px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+
+    .desc {
+      font-size: 10px;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* Toggle Switch */
+    .toggle {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #333;
+      border-radius: 22px;
+      transition: background 0.25s;
+    }
+
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.25s;
+    }
+
+    input:checked + .slider {
+      background: #ff0000;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(18px);
+    }
+
+    .arrow-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #2a2a2a;
+      font-size: 10px;
+      color: #555;
+    }
+
+    .domain {
+      font-family: monospace;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .from { background: #1e1e1e; color: #888; border: 1px solid #333; }
+    .to   { background: #1a0000; color: #ff6666; border: 1px solid #500; }
+
+    .arrow { color: #444; font-size: 12px; }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ff0000;
+      display: inline-block;
+      margin-right: 5px;
+      transition: background 0.3s;
+    }
+
+    .status-dot.off { background: #444; }
+
+    .status-text {
+      font-size: 10px;
+      color: #666;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 9px;
+      color: #333;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-row">
+    <div class="logo-icon">
+      <!-- Play icon -->
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+    <div>
+      <div class="title">YT → yout-ube (New Tab)</div>
+      <div class="subtitle">Firefox Extension</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <div class="label">Auto Redirect</div>
+        <div class="desc">Opens YouTube links in a<br>new tab on yout-ube.com</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="toggleSwitch" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="arrow-row">
+      <span class="domain from">youtube.com</span>
+      <span class="arrow">→</span>
+      <span class="domain to">yout-ube.com</span>
+    </div>
+  </div>
+
+  <div class="row" style="padding: 0 2px;">
+    <div>
+      <span class="status-dot" id="statusDot"></span>
+      <span class="status-text" id="statusText">Active</span>
+    </div>
+  </div>
+
+  <div class="footer" style="margin-top:14px;">All navigation is handled locally · No data sent</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

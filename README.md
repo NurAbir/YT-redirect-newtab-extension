@@ -1,6 +1,8 @@
 # YouTube → yout-ube Redirector
 
-> A lightweight Chromium extension that intercepts YouTube **video link** clicks and opens them on **yout-ube.com** in a new tab — while keeping your current page completely unchanged.
+> A lightweight browser extension that intercepts YouTube **video link** clicks and opens them on **yout-ube.com** in a new tab — while keeping your current page completely unchanged.
+
+Available in two editions: one for **Chromium-based browsers** (Chrome, Edge, Brave, Opera, Vivaldi) and one for **Firefox**.
 
 ---
 
@@ -43,29 +45,43 @@ Only `/watch` links are intercepted. Clicking the YouTube homepage, channel page
 - ✅ Ignores Ctrl+Click, Cmd+Click, Shift+Click
 - ✅ Toggle on/off from the extension popup
 - ✅ No data collected, no external servers, fully local
-- ✅ Manifest V3 compliant
 
 ---
 
 ## Browser Compatibility
 
-| Browser | Supported |
-|---------|-----------|
-| Google Chrome | ✅ |
-| Microsoft Edge | ✅ |
-| Brave | ✅ |
-| Opera | ✅ |
-| Vivaldi | ✅ |
-| Firefox | ❌ (different extension API) |
+| Browser | Supported | Edition |
+|---------|-----------|---------|
+| Google Chrome | ✅ | Chromium (Manifest V3) |
+| Microsoft Edge | ✅ | Chromium (Manifest V3) |
+| Brave | ✅ | Chromium (Manifest V3) |
+| Opera | ✅ | Chromium (Manifest V3) |
+| Vivaldi | ✅ | Chromium (Manifest V3) |
+| Firefox | ✅ | Firefox (Manifest V2) |
 
 ---
 
 ## File Structure
 
+### Chromium Edition (`yt-redirect-newtab-extension/`)
 ```
 yt-redirect-newtab-extension/
 ├── manifest.json      # Extension config (Manifest V3)
 ├── background.js      # Service worker — tab creation & state storage
+├── content.js         # Injected into all pages — intercepts /watch clicks
+├── popup.html         # Toggle UI shown on icon click
+├── popup.js           # Popup interaction logic
+└── icons/
+    ├── icon16.png
+    ├── icon48.png
+    └── icon128.png
+```
+
+### Firefox Edition (`yt-redirect-newtab-extension_firefox/`)
+```
+yt-redirect-newtab-extension_firefox/
+├── manifest.json      # Extension config (Manifest V2, Gecko ID)
+├── background.js      # Event page — tab creation & state storage
 ├── content.js         # Injected into all pages — intercepts /watch clicks
 ├── popup.html         # Toggle UI shown on icon click
 ├── popup.js           # Popup interaction logic
@@ -92,12 +108,25 @@ content.js (useCapture: true, synchronous)
 e.preventDefault()   ← synchronous, browser never navigates
 e.stopPropagation()
         │
-chrome.runtime.sendMessage → background.js
+runtime.sendMessage → background.js
         │
-chrome.tabs.create({ url: "yout-ube.com/watch?v=..." })
+tabs.create({ url: "yout-ube.com/watch?v=..." })
 ```
 
-**Why synchronous matters:** `preventDefault()` only works when called during the original event dispatch. The enabled state is cached locally in the content script via `chrome.storage.local` so there is zero async delay — the browser is blocked before it even starts navigating.
+**Why synchronous matters:** `preventDefault()` only works when called during the original event dispatch. The enabled state is cached locally in the content script via storage API so there is zero async delay — the browser is blocked before it even starts navigating.
+
+---
+
+## Key Differences Between Editions
+
+| | Chromium Edition | Firefox Edition |
+|---|---|---|
+| Manifest version | V3 | V2 |
+| Background script | Service worker | Event page |
+| Browser API | `chrome.*` (callbacks) | `browser.*` (Promises) |
+| Popup key | `action` | `browser_action` |
+| Host permissions | Separate `host_permissions` key | Inside `permissions` array |
+| Gecko ID | — | `yt-redirect-newtab@extension` |
 
 ---
 
@@ -121,10 +150,10 @@ chrome.tabs.create({ url: "yout-ube.com/watch?v=..." })
 | 1.2.0 | New tab edition using `webNavigation` |
 | 1.3.0 | Rewrote with content script + synchronous `preventDefault()` — original tab never navigates |
 | 1.4.0 | Redirect scoped to `/watch` links only — homepage, channels, search unaffected |
+| 1.5.0 | Added Firefox edition (Manifest V2, `browser.*` Promise API) |
 
 ---
 
 ## License
 
 MIT — free to use, modify, and distribute.
-.

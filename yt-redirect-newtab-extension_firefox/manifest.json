@@ -1,0 +1,42 @@
+{
+  "manifest_version": 2,
+  "name": "YouTube → yout-ube Redirector (New Tab)",
+  "version": "1.4.0",
+  "description": "Intercepts YouTube link clicks and opens yout-ube.com in a new tab. Original tab is never touched.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "yt-redirect-newtab@extension",
+      "strict_min_version": "91.0"
+    }
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "*://*.youtube.com/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

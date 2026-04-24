@@ -14,7 +14,16 @@ Only video links (`youtube.com/watch?v=...`) are affected. Clicking the YouTube 
 
 ---
 
-## Installation
+## Which Edition Do I Need?
+
+| Your Browser | Edition to Use |
+|---|---|
+| Chrome, Edge, Brave, Opera, Vivaldi | **Chromium Edition** — `yt-redirect-newtab-extension.zip` |
+| Firefox | **Firefox Edition** — `yt-redirect-newtab-extension_firefox.zip` |
+
+---
+
+## Installation — Chromium Edition
 
 ### Step 1 — Download & Unzip
 Download `yt-redirect-newtab-extension.zip` and unzip it to a folder on your computer.
@@ -33,6 +42,29 @@ Click **"Load unpacked"** and select the unzipped `yt-redirect-newtab-extension`
 
 ### Step 5 — Done ✅
 The red play button icon appears in your toolbar. The extension is now active.
+
+> **Tip:** Click the puzzle piece icon in the toolbar and pin the extension so it is always visible.
+
+---
+
+## Installation — Firefox Edition
+
+### Step 1 — Download & Unzip
+Download `yt-redirect-newtab-extension_firefox.zip` and unzip it to a folder on your computer.
+
+### Step 2 — Open the Debugging Page
+Type the following in your Firefox address bar and press **Enter**:
+```
+about:debugging#/runtime/this-firefox
+```
+
+### Step 3 — Load the Extension
+Click **"Load Temporary Add-on…"** and select the `manifest.json` file inside the unzipped `yt-redirect-newtab-extension_firefox` folder.
+
+### Step 4 — Done ✅
+The red play button icon appears in your toolbar. The extension is now active.
+
+> **Note:** Temporary add-ons in Firefox are removed when you close the browser. For a permanent install without the browser restarting issue, use **Firefox Developer Edition** or **Firefox Nightly**, or submit the extension to [addons.mozilla.org](https://addons.mozilla.org) for signing.
 
 > **Tip:** Click the puzzle piece icon in the toolbar and pin the extension so it is always visible.
 
@@ -87,16 +119,29 @@ YouTube video links will open normally until you turn it back on. Your preferenc
 
 ## Updating the Extension
 
+### Chromium
 1. Go to `chrome://extensions/`
 2. Find **"YouTube → yout-ube Redirector (New Tab)"** and click **Remove**
 3. Unzip the new version
 4. Click **"Load unpacked"** and select the new folder
 
+### Firefox
+1. Go to `about:debugging#/runtime/this-firefox`
+2. Find **"YouTube → yout-ube Redirector (New Tab)"** and click **Remove**
+3. Unzip the new version
+4. Click **"Load Temporary Add-on…"** and select the `manifest.json` in the new folder
+
 ---
 
 ## Uninstalling
 
+### Chromium
 1. Go to `chrome://extensions/`
+2. Find **"YouTube → yout-ube Redirector (New Tab)"**
+3. Click **Remove** and confirm
+
+### Firefox
+1. Go to `about:addons` or `about:debugging#/runtime/this-firefox`
 2. Find **"YouTube → yout-ube Redirector (New Tab)"**
 3. Click **Remove** and confirm
 
@@ -106,10 +151,11 @@ YouTube video links will open normally until you turn it back on. Your preferenc
 
 | Problem | Solution |
 |---------|----------|
-| Current tab still navigates to YouTube | You may have the old version installed — remove it and load the latest zip |
+| Current tab still navigates to YouTube | You may have the old version installed — remove it and reload |
 | No new tab opens when clicking a video link | Check the toggle is ON in the popup |
 | Homepage / channel links are being redirected | Make sure you have v1.4.0+ — older versions redirected all YouTube links |
-| "Load unpacked" button not visible | Turn on Developer mode (top-right toggle on the extensions page) |
+| **Chromium:** "Load unpacked" button not visible | Turn on Developer mode (top-right toggle on the extensions page) |
+| **Firefox:** Extension disappears after restart | Temporary add-ons are removed on browser close — re-load via `about:debugging`, or use Firefox Developer Edition for persistence |
 | New tab opens but shows an error | yout-ube.com may be temporarily unavailable — try again shortly |
 | Toggle doesn't seem to apply | Refresh the current page once after toggling |
 
@@ -128,4 +174,4 @@ This extension:
 
 ## Version
 
-**v1.4.0** — Watch-link-only redirect with synchronous click interception.
+**v1.5.0** — Chromium (Manifest V3) + Firefox (Manifest V2) editions.
